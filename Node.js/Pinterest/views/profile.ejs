@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="profile-content">
+      <div class="container">
+        <div class="card">
+          <div class="profile-picture">
+            <img
+              src="https://images.unsplash.com/photo-1708869682896-815b11a9d45f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="Profile Picture"
+            />
+          </div>
+          <h2 class="fullname"><%=user.fullname%></h2>
+          <h3 class="username">@<%=user.username%></h3>
+          <p class="tagline">Keep going.</p>
+          <p class="description">Masih belajar CSS dan HTML.</p>
+          <a id="logout" href="/logout" class="button">logout</a>
+          <button id="createpost" class="button">Create Post</button>
+        </div>
+      </div>
+      <div id="content">
+        <% user.posts.forEach(function (post) { %>
+        <div class="container-card">
+          <div class="flipper">
+            <div class="front">
+              <img src="/images/upload/<%= post.image%>" alt="img" />
+              <p><%=post.postText%></p>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <div id="create-post-curtain">
+        <form
+          id="createpostForm"
+          method="post"
+          action="/upload"
+          enctype="multipart/form-data"
+        >
+          <input
+            type="text"
+            placeholder="caption here"
+            name="postText"
+            required
+          />
+          <input type="file" name="file" required />
+          <button type="submit" class="button">Post</button>
+        </form>
+        <button id="closepost" class="button">close</button>
+      </div>
+    </div>
+    <script>
+      const createPostBtn = document.querySelector("#createpost");
+      const Curtain = document.querySelector("#create-post-curtain");
+      const closepostBtn = document.querySelector("#closepost");
+
+      createPostBtn.addEventListener("click", () => {
+        Curtain.style.display = "block";
+        document.body.style.overflow = "hidden";
+      });
+      closepostBtn.addEventListener("click", () => {
+        Curtain.style.display = "none";
+        document.body.style.overflowX = "hidden";
+        document.body.style.overflowY = "scroll";
+      });
+    </script>
+  </body>
+</html>
